@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(DEBUG) Nasa Explorer App",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file",
+                "env/env_config.json"
+            ]
+        }
+    ]
+}
