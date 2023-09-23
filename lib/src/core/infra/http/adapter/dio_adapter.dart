@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
 import 'package:nasa_explorer_app/src/core/failure/failure_type.dart';
 
 import '../../../failure/failure.dart';
@@ -27,7 +28,7 @@ class DioAdapter implements HttpClient {
         responseHeader: true,
         responseBody: true,
         logPrint: (object) {
-          Logger().d(object.toString());
+          log(object.toString());
         },
       ),
     );
@@ -41,7 +42,7 @@ class DioAdapter implements HttpClient {
   }
 
   @override
-  Future<Map?> request({
+  Future<List?> request({
     required String url,
     required String method,
     Map<String, dynamic>? queryParameters,
@@ -71,7 +72,8 @@ class DioAdapter implements HttpClient {
               options: options, queryParameters: queryParameters ?? {});
           break;
         case 'get':
-          response = await dio.get(url, options: options);
+          response = await dio.get(url,
+              queryParameters: queryParameters ?? {}, options: options);
           break;
         case 'put':
           response =
@@ -101,7 +103,7 @@ class DioAdapter implements HttpClient {
     return _handleResponse(response);
   }
 
-  Map? _handleResponse(Response response) {
+  List<dynamic> _handleResponse(Response response) {
     switch (response.statusCode) {
       case 200:
       case 202:
@@ -109,7 +111,7 @@ class DioAdapter implements HttpClient {
         return _getResponseData(response);
 
       case 204:
-        return null;
+        return [];
       case 400:
         throw HttpError.badRequest;
       case 401:
@@ -137,7 +139,7 @@ class DioAdapter implements HttpClient {
     }
   }
 
-  dynamic _getResponseData(Response response) {
+  _getResponseData(Response response) {
     if (response.data != null) {
       return response.data;
     } else {

@@ -1,6 +1,6 @@
 class MediaEntity {
   final String title;
-  final DateTime date;
+  final String date;
   final String url;
   final String explanation;
   final String mediaType;

@@ -7,7 +7,7 @@ import 'package:nasa_explorer_app/src/core/infra/http/client/http_client.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/repositories/media_repository_impl.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/repositories/media_repository.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/usecases/get_media_pictures_list_usecase.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/presenters/home_presenter.dart';
+import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/presenters/page_presenter.dart';
 
 import '../core/injection/dependency_injection.dart';
 import '../features/astronomy_pictures/data/datasources/cache/cache_media_pictures_datasource_impl.dart';
@@ -40,7 +40,7 @@ class AppDependencyInjection extends DependencyInjection {
     ));
 
     /// presenter
-    register<HomePresenter>(HomePresenter(
+    register<PagePresenter>(PagePresenter(
       getMediaPicturesListUsecase: get<GetMediaPicturesListUsecase>(),
     ));
   }

@@ -6,5 +6,5 @@ class DependencyInjection {
   void register<T extends Object>(T dependency) =>
       _getIt.registerLazySingleton<T>(() => dependency);
 
-  T get<T>() => _getIt<T>();
+  T get<T extends Object>() => _getIt<T>();
 }

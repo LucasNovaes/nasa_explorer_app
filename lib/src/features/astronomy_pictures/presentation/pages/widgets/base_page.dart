@@ -56,7 +56,7 @@ class _BasePageState extends State<BasePage> {
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.white70,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text('NASA Explorer App'),
             actions: [

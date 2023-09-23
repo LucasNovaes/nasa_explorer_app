@@ -1,3 +1,4 @@
+import 'package:nasa_explorer_app/src/core/constants/environment_config.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/models/media_model.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/entities/media_entity.dart';
 
@@ -18,16 +19,16 @@ class ExternalApiMediaPicturesDatasourceImpl
   @override
   Future<List<MediaEntity>> getMediaPicturesList() async {
     try {
-      final response = await httpClient.request(
+      final List response = await httpClient.request(
         method: "get",
-        url: baseUrl,
-        queryParameters: {"count": "10"},
+        url: "$baseUrl/planetary/apod",
+        queryParameters: {"api_key": EnvironmentConfig.apiKey, "count": "10"},
       );
 
-      final data = response.data;
-
-      if (data.isNotEmpty) {
-        return data.map((e) => MediaModel.fromMap(e).toEntity()).toList();
+      if (response.isNotEmpty) {
+        final result =
+            response.map((e) => MediaModel.fromMap(e).toEntity()).toList();
+        return result;
       } else {
         throw const Failure("getMediaPicturesList return is NULL",
             type: FailureType.emptyData);

@@ -5,7 +5,7 @@ import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/entitie
 
 class MediaModel {
   final String title;
-  final DateTime date;
+  final String date;
   final String url;
   final String explanation;
   final String mediaType;
@@ -19,7 +19,7 @@ class MediaModel {
 
   MediaModel copyWith({
     String? title,
-    DateTime? date,
+    String? date,
     String? url,
     String? explanation,
     String? mediaType,
@@ -36,7 +36,7 @@ class MediaModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'title': title,
-      'date': date.millisecondsSinceEpoch,
+      'date': date,
       'url': url,
       'explanation': explanation,
       'mediaType': mediaType,
@@ -45,11 +45,11 @@ class MediaModel {
 
   factory MediaModel.fromMap(Map<String, dynamic> map) {
     return MediaModel(
-      title: map['title'] as String,
-      date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
-      url: map['url'] as String,
-      explanation: map['explanation'] as String,
-      mediaType: map['mediaType'] as String,
+      title: map['title'],
+      date: map['date'],
+      url: map['url'],
+      explanation: map['explanation'],
+      mediaType: map['media_type'],
     );
   }
 
