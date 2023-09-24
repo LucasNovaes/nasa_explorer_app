@@ -29,7 +29,7 @@ class CacheStorageAdapter implements CacheStorageClient {
   @override
   Future<List<String>?> getList(String key) async {
     if (!_isInitialized) await initialize();
-    return await _sharedPreferences.getStringList(key);
+    return _sharedPreferences.getStringList(key);
   }
 
   @override
