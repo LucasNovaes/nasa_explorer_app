@@ -24,6 +24,12 @@ class DetailPage extends StatelessWidget {
               Image.network(
                 mediaData!.url,
                 fit: BoxFit.cover,
+                errorBuilder: (_, Object error, StackTrace? stack) {
+                  return Image.asset(
+                    'assets/images/nasa_logo.jpg',
+                    height: 100,
+                  );
+                },
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
                     return child;

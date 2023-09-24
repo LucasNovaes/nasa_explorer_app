@@ -23,6 +23,13 @@ class MediaRepositoryImpl implements MediaRepository {
         : await cacheMediaPicturesDatasources.getMediaPicturesList();
   }
 
+  @override
+  Future<void> saveMediaPicturesList(
+      {required List<MediaEntity> listData}) async {
+    await cacheMediaPicturesDatasources.saveMediaPicturesList(
+        listData: listData);
+  }
+
   Future<bool> _checkConnectivity() async {
     final connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult != ConnectivityResult.none;

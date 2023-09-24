@@ -5,5 +5,5 @@ import 'src/app/app_manager_widget.dart';
 
 Future<void> main() async {
   AppDependencyInjection().setup();
-  runApp(AppManagerWidget());
+  runApp(SafeArea(child: AppManagerWidget()));
 }

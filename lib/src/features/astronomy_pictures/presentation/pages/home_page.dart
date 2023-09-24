@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController controller = TextEditingController();
+
   @override
   void initState() {
     widget.presenter.init();
@@ -26,13 +28,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BasePage(
       state: widget.presenter.pageState,
+      onRefreshBtnPressed: () => widget.presenter.getMediaList(),
+      onErrorDialogBtnPressed: () => Navigator.of(context).pop(),
+      searchBar: SearchBar(
+        controller: controller,
+        leading: const Icon(Icons.search),
+        onChanged: (e) {
+          widget.presenter.search(e);
+          setState(() {});
+        },
+      ),
       child: ValueListenableBuilder(
         valueListenable: widget.presenter.mediaList,
         builder: (context, list, _) {
+          final displayedList = (controller.text.isEmpty)
+              ? list
+              : widget.presenter.filteredMediaList;
+
           return ListView.builder(
-            itemCount: list.length,
+            itemCount: displayedList.length,
             itemBuilder: (context, index) {
-              final MediaEntity e = list[index];
+              final MediaEntity e = displayedList[index];
               return Card(
                 elevation: 1,
                 child: ListTile(

@@ -3,9 +3,9 @@ abstract class CacheStorageClient {
   Future<void> initialize();
   Future<void> clear();
   Future<void> delete(String key);
-  Future<dynamic> get(String key);
-  Future<void> save({
+  Future<List<String>?> getList(String key);
+  Future<void> saveList({
     required String key,
-    required String value,
+    required List<String> value,
   });
 }
