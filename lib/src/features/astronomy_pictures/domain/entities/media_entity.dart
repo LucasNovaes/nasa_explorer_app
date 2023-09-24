@@ -5,11 +5,21 @@ class MediaEntity {
   final String explanation;
   final String mediaType;
 
-  MediaEntity({
+  const MediaEntity({
     required this.title,
     required this.date,
     required this.url,
     required this.explanation,
     required this.mediaType,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'date': date,
+      'url': url,
+      'explanation': explanation,
+      'media_type': mediaType,
+    };
+  }
 }

@@ -27,17 +27,17 @@ class CacheStorageAdapter implements CacheStorageClient {
   }
 
   @override
-  Future<String?> get(String key) async {
+  Future<List<String>?> getList(String key) async {
     if (!_isInitialized) await initialize();
-    return _sharedPreferences.getString(key);
+    return await _sharedPreferences.getStringList(key);
   }
 
   @override
-  Future<void> save({
+  Future<void> saveList({
     required String key,
-    required String value,
+    required List<String> value,
   }) async {
     if (!_isInitialized) await initialize();
-    await _sharedPreferences.setString(key, value);
+    await _sharedPreferences.setStringList(key, value);
   }
 }

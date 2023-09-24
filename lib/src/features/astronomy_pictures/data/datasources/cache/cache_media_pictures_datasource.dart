@@ -2,4 +2,5 @@ import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/entitie
 
 abstract class CacheMediaPicturesDatasource {
   Future<List<MediaEntity>> getMediaPicturesList();
+  Future<void> saveMediaPicturesList({required List<MediaEntity> listData});
 }

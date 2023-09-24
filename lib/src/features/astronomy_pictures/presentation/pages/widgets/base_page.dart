@@ -5,16 +5,18 @@ class BasePage extends StatefulWidget {
   final ValueNotifier<PageState> state;
   final VoidCallback? onSuccess;
   final Widget child;
-  final PreferredSizeWidget? appBar;
-  final Function()? onRefreshPressed;
+  final SearchBar? searchBar;
+  final Function()? onRefreshBtnPressed;
+  final Function()? onErrorDialogBtnPressed;
 
   const BasePage({
     Key? key,
+    this.searchBar,
     required this.state,
     this.onSuccess,
     required this.child,
-    this.appBar,
-    this.onRefreshPressed,
+    this.onRefreshBtnPressed,
+    this.onErrorDialogBtnPressed,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,10 @@ class _BasePageState extends State<BasePage> {
                   icon: const Icon(Icons.error),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.of(context),
+                      onPressed: widget.onErrorDialogBtnPressed ??
+                          () {
+                            Navigator.of(context).pop();
+                          },
                       child: const Text("OK"),
                     )
                   ],
@@ -60,16 +65,28 @@ class _BasePageState extends State<BasePage> {
           appBar: AppBar(
             title: const Text('NASA Explorer App'),
             actions: [
-              TextButton(
-                onPressed: widget.onRefreshPressed,
-                child: const Icon(
-                  Icons.refresh,
-                ),
-              )
+              if (widget.onRefreshBtnPressed != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          return Colors.white70;
+                        },
+                      ),
+                    ),
+                    onPressed: widget.onRefreshBtnPressed,
+                    child: const Icon(
+                      Icons.refresh,
+                    ),
+                  ),
+                )
             ],
           ),
           body: Column(
             children: [
+              if (widget.searchBar != null) widget.searchBar!,
               Expanded(child: widget.child),
             ],
           ),
