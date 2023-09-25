@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/presenters/page_presenter.dart';
-
-import '../core/injection/dependency_injection.dart';
+import '../core/core.dart' show DependencyInjection;
 import '../features/astronomy_pictures/presentation/presentation.dart'
-    show HomePage, DetailPage;
+    show HomePage, DetailPage, PagePresenter;
 
 class AppManagerWidget extends StatelessWidget {
   AppManagerWidget({Key? key}) : super(key: key);

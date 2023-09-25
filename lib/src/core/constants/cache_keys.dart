@@ -1,4 +1,4 @@
 class CacheKeys {
   CacheKeys._();
-  static const mediasCacheKey = "medias";
+  static const mediasCacheKey = "MEDIA_PICTURES";
 }

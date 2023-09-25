@@ -9,7 +9,10 @@
 .history
 .svn/
 migrate_working_dir/
-
+windows/
+build/
+.vscode/
+coverage/
 # IntelliJ related
 *.iml
 *.ipr

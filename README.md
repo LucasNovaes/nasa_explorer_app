@@ -1,6 +1,6 @@
 # nasa_explorer_app
 
-A new Flutter project.
+A Flutter App to show media of Astronomy Pictures Of Day by NASA.
 
 ## Getting Started
 
