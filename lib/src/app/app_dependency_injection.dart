@@ -1,25 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:nasa_explorer_app/src/core/constants/environment_config.dart';
-import 'package:nasa_explorer_app/src/core/infra/cache_storage/adapter/cache_storage_adapter.dart';
-import 'package:nasa_explorer_app/src/core/infra/cache_storage/client/cache_storage_client.dart';
-import 'package:nasa_explorer_app/src/core/infra/http/adapter/dio_adapter.dart';
-import 'package:nasa_explorer_app/src/core/infra/http/client/http_client.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/repositories/media_repository_impl.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/repositories/media_repository.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/presenters/page_presenter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../core/injection/dependency_injection.dart';
-import '../features/astronomy_pictures/data/datasources/cache/cache_media_pictures_datasource_impl.dart';
-import '../features/astronomy_pictures/data/datasources/datasources.dart';
-import '../features/astronomy_pictures/data/datasources/external_api/external_api_media_pictures_datasource_impl.dart';
-import '../features/astronomy_pictures/domain/usecases/get_media_pictures_list_usecase.dart';
-import '../features/astronomy_pictures/domain/usecases/save_media_pictures_list_usecase.dart';
+import '../core/core.dart';
+import '../features/astronomy_pictures/data/data.dart';
+import '../features/astronomy_pictures/domain/domain.dart';
+import '../features/astronomy_pictures/presentation/presentation.dart';
 
 class AppDependencyInjection extends DependencyInjection {
   Future<void> setup() async {
     /// infra
-    register<CacheStorageClient>(CacheStorageAdapter());
-    register<HttpClient>(DioAdapter(dio: Dio()));
+    register<CacheStorageClient>(CacheStorageAdapter(
+        sharedPreferences: await SharedPreferences.getInstance()));
+    register<HttpClient>(
+        DioAdapter(dio: Dio(), interceptors: [CustomInterceptor()]));
 
     /// data
     register<CacheMediaPicturesDatasource>(CacheMediaPicturesDatasourceImpl(
