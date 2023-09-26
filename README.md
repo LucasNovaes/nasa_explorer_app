@@ -11,16 +11,14 @@ A Flutter mobile app (available on iOS and Android) designed to showcase stunnin
 
 ## Getting Started
 - This project uses Flutter version 3.13.5.
+
 ### Prerequisites
 To run the NASA Explorer App project, you will need the following:
-
 - Dio package version 5.3.2 or higher.
 - Shared Preferences package version 2.2.1 or higher.
 - Get It package version 7.0.3 or higher.
 - Mocktail package version 1.0.0 or higher.
-  
-You can install Flutter and Dart from the Flutter website. You can install the other packages using the following command:
-``flutter pub get``
+
 ### Additional notes
 The NASA Explorer App project uses the Material Design widget library.
 The project also has an assets folder containing images that are used in the app.
@@ -38,5 +36,6 @@ The adopted architecture follows Clean Architecture principles, as well as SOLID
 - Domain
 - Data
 - Presentation
+
 ## State Management
 The library for managing states was ValueNotifier. That allows you to store a value and notify any listeners when the value changes.
