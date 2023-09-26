@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/presentation.dart';
 
-import '../../../../mocks/entities/mock_media_entity.dart';
-
-class MockGetMediaPicturesListUsecase extends Mock
-    implements GetMediaPicturesListUsecase {}
-
-class MockSaveMediaPicturesListUsecase extends Mock
-    implements SaveMediaPicturesListUsecase {}
+import '../../../../mocks/domain/entities/mock_media_entity.dart';
+import '../../../../mocks/domain/usecases/mock_get_media_pictures_list_usecase.dart';
+import '../../../../mocks/domain/usecases/mock_save_media_pictures_list_usecase.dart';
 
 void main() {
   late PagePresenter presenter;

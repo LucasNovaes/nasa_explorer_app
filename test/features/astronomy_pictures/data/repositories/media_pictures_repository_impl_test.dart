@@ -4,13 +4,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/utils/connectivity_utils.dart';
 
-import '../../../../mocks/entities/mock_media_entity.dart';
-
-class MockCacheMediaPicturesDatasources extends Mock
-    implements CacheMediaPicturesDatasource {}
-
-class MockExternalApiMediaPicturesDatasources extends Mock
-    implements ExternalApiMediaPicturesDatasource {}
+import '../../../../mocks/data/datasources/mock_cache_media_pictures_datasource.dart';
+import '../../../../mocks/data/datasources/mock_external_api_media_pictures_datasource.dart';
+import '../../../../mocks/domain/entities/mock_media_entity.dart';
 
 class MockConnectivity extends Mock implements ConnectivityUtils {}
 
@@ -63,7 +59,8 @@ void main() {
     when(() => mockCacheMediaPicturesDatasources.getMediaPicturesList())
         .thenAnswer((_) async => []);
 
-    final result = await mediaRepositoryImpl.getMediaPicturesList();
+    final result =
+        await mediaRepositoryImpl.getMediaPicturesList(isConnected: false);
 
     expect(result, []);
   });

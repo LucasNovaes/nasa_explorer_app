@@ -2,7 +2,7 @@ import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../../mocks/entities/mock_media_entity.dart';
+import '../../../../mocks/domain/entities/mock_media_entity.dart';
 
 class MockMediaRepository extends Mock implements MediaRepository {}
 

@@ -5,13 +5,9 @@ import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/pages/widgets/base_page.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/presentation/presentation.dart';
 
-import '../../../../mocks/entities/mock_media_entity.dart';
-
-class MockGetMediaPicturesListUsecase extends Mock
-    implements GetMediaPicturesListUsecase {}
-
-class MockSaveMediaPicturesListUsecase extends Mock
-    implements SaveMediaPicturesListUsecase {}
+import '../../../../mocks/domain/entities/mock_media_entity.dart';
+import '../../../../mocks/domain/usecases/mock_get_media_pictures_list_usecase.dart';
+import '../../../../mocks/domain/usecases/mock_save_media_pictures_list_usecase.dart';
 
 void main() {
   late PagePresenter presenter;
