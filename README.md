@@ -18,6 +18,7 @@ To run the NASA Explorer App project, you will need the following:
 - Shared Preferences package version 2.2.1 or higher.
 - Get It package version 7.0.3 or higher.
 - Mocktail package version 1.0.0 or higher.
+  
 You can install Flutter and Dart from the Flutter website. You can install the other packages using the following command:
 ``flutter pub get``
 ### Additional notes
