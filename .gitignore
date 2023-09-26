@@ -13,6 +13,8 @@ windows/
 build/
 .vscode/
 coverage/
+env/
+
 # IntelliJ related
 *.iml
 *.ipr
