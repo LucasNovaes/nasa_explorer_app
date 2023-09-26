@@ -27,10 +27,13 @@ The project also has an assets folder containing images that are used in the app
 - 1 - Obtain an [API Key](https://api.nasa.gov/).
 - 2 - Run the script ``flutter_clean_get.sh``.
 - 3 - Execute the following command:
-```flutter run -t lib/main.dart \
+```
+flutter run -t lib/main.dart \
 --dart-define=API_BASE_URL=https://api.nasa.gov \
 --dart-define=API_ID_KEY=<your API Key>
 ```
+Attention: To publish in production, do not store your key in the project, use a CI to set it via "dart-define" as shown previously.
+
 ## Architecture
 The adopted architecture follows Clean Architecture principles, as well as SOLID and Clean Code principles. The core structure comprises the following layers:
 - Domain
