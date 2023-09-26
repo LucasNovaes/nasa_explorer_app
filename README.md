@@ -1,27 +1,26 @@
-### NASA Explorer App
+# NASA Explorer App
 ## About:
-A Flutter mobile app (iOS and Android) for displaying amazing astronomy photos by loading images with information via NASA's Astronomy Pictures Of Day API.
+A Flutter mobile app (available on iOS and Android) designed to showcase stunning astronomy photos. These images are retrieved along with relevant information through NASA's Astronomy Pictures Of The Day API.
 
-# Functionalities
-- Main page listing 10 image items with title and date
-- Details page that loads the image, title and description of the selected item on the main page
-- Caching of items downloaded from the internet, giving the application the freedom to work offline.
+## Functionalities
+- Main page featuring a list of image items, each displaying a title and date.
+- Details page that loads the selected item's image, title, and description from the main page.
+- Caching of items downloaded from the internet, enabling the application to function offline.
 
-# Architecture
-The architecture adopted is Clean Arch, and also SOLID and Clean Code principles.
-The base structure consists of the layers:
+## Architecture
+The adopted architecture follows Clean Architecture principles, as well as SOLID and Clean Code principles. The core structure comprises the following layers:
 - Domain
 - Data
 - Presentation
 
-# How to run
-- 1 - Get an [API Key](https://api.nasa.gov/)
-- 2 - Run script ``flutter_clean_get.sh``
-- 2 - Run the command: 
+## How to Run
+- 1 - Obtain an [API Key](https://api.nasa.gov/).
+- 2 - Run the script ``flutter_clean_get.sh``.
+- 3 - Execute the following command:
 ```flutter run -t lib/main.dart \
 --dart-define=API_BASE_URL=https://api.nasa.gov \
 --dart-define=API_ID_KEY=<your API Key>
 ```
 
-# Extras
-To coverage tests run the sh script ```flutter_run_coverage_test.sh```
+## Extras
+To run test coverage, execute the shell script ```flutter_run_coverage_test.sh```.
