@@ -1,16 +1,27 @@
-# nasa_explorer_app
+### NASA Explorer App
+## About:
+A Flutter mobile app (iOS and Android) for displaying amazing astronomy photos by loading images with information via NASA's Astronomy Pictures Of Day API.
 
-A Flutter App to show media of Astronomy Pictures Of Day by NASA.
+# Functionalities
+- Main page listing 10 image items with title and date
+- Details page that loads the image, title and description of the selected item on the main page
+- Caching of items downloaded from the internet, giving the application the freedom to work offline.
 
-## Getting Started
+# Architecture
+The architecture adopted is Clean Arch, and also SOLID and Clean Code principles.
+The base structure consists of the layers:
+- Domain
+- Data
+- Presentation
 
-This project is a starting point for a Flutter application.
+# How to run
+- 1 - Get an [API Key](https://api.nasa.gov/)
+- 2 - Run script ``flutter_clean_get.sh``
+- 2 - Run the command: 
+```flutter run -t lib/main.dart \
+--dart-define=API_BASE_URL=https://api.nasa.gov \
+--dart-define=API_ID_KEY=<your API Key>
+```
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Extras
+To coverage tests run the sh script ```flutter_run_coverage_test.sh```

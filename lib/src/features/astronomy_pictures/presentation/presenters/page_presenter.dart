@@ -38,7 +38,7 @@ class PagePresenter {
     } catch (e) {
       pageState.value = PageStateError(
           description:
-              "Ocorreu um erro ao carregar as imagens. Tente novamente");
+              "Something went wrong. Check your internet connection and try refresh.");
       rethrow;
     }
   }
