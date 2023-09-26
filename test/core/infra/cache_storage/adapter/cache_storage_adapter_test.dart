@@ -23,8 +23,7 @@ void main() {
       key: jsonEncode(listEncode),
     });
 
-    cacheStorage = CacheStorageAdapter(
-        sharedPreferences: await SharedPreferences.getInstance());
+    cacheStorage = CacheStorageAdapter();
     cacheStorage.saveList(key: key, value: listEncode);
   });
 

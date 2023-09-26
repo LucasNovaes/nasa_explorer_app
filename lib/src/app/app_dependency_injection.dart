@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/core.dart';
 import '../features/astronomy_pictures/data/data.dart';
@@ -9,8 +8,7 @@ import '../features/astronomy_pictures/presentation/presentation.dart';
 class AppDependencyInjection extends DependencyInjection {
   Future<void> setup() async {
     /// infra
-    register<CacheStorageClient>(CacheStorageAdapter(
-        sharedPreferences: await SharedPreferences.getInstance()));
+    register<CacheStorageClient>(CacheStorageAdapter());
     register<HttpClient>(
         DioAdapter(dio: Dio(), interceptors: [CustomInterceptor()]));
 
