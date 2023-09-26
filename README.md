@@ -1,5 +1,5 @@
 # NASA Explorer App
-## About:
+## About
 A Flutter mobile app (available on iOS and Android) designed to showcase stunning astronomy photos. These images are retrieved along with relevant information through [NASA's Astronomy Pictures Of The Day API](https://api.nasa.gov/).
 
 ## Functionalities
