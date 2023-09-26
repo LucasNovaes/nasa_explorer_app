@@ -1,3 +1,4 @@
+### NASA Explorer App
 ## About:
 A Flutter mobile app (iOS and Android) for displaying amazing astronomy photos by loading images with information via NASA's Astronomy Pictures Of Day API.
 
@@ -15,7 +16,12 @@ The base structure consists of the layers:
 
 # How to run
 - 1 - Get an [API Key](https://api.nasa.gov/)
+- 2 - Run script ``flutter_clean_get.sh``
 - 2 - Run the command: 
-``flutter run -t lib/main.dart \
+```flutter run -t lib/main.dart \
 --dart-define=API_BASE_URL=https://api.nasa.gov \
---dart-define=API_ID_KEY=<your API Key>``
+--dart-define=API_ID_KEY=<your API Key>
+```
+
+# Extras
+To coverage tests run the sh script ```flutter_run_coverage_test.sh```
