@@ -5,7 +5,7 @@ import 'package:nasa_explorer_app/src/core/core.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../mocks/entities/mock_media_entity.dart';
+import '../../../../mocks/domain/entities/mock_media_entity.dart';
 
 void main() {
   late CacheStorageClient cacheStorage;

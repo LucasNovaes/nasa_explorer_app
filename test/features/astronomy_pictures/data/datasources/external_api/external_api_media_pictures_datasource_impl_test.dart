@@ -3,7 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/data.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/entities/media_entity.dart';
 
-import '../../../../../mocks/http/mock_http_client.dart';
+import '../../../../../mocks/core/http/mock_http_client.dart';
 
 void main() {
   test('getMediaPicturesList should return a list of MediaEntity', () async {

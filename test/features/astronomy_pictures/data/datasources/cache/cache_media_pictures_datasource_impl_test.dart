@@ -7,8 +7,8 @@ import 'package:nasa_explorer_app/src/core/core.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/data.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.dart';
 
-import '../../../../../mocks/cache_storage/mock_cache_storage.dart';
-import '../../../../../mocks/entities/mock_media_entity.dart';
+import '../../../../../mocks/core/cache_storage/mock_cache_storage.dart';
+import '../../../../../mocks/domain/entities/mock_media_entity.dart';
 
 void main() {
   late CacheMediaPicturesDatasourceImpl datasource;

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nasa_explorer_app/src/core/core.dart';
 
-import '../../../../mocks/http/mock_dio.dart';
+import '../../../../mocks/core/http/mock_dio.dart';
 
 class OptionsFake extends Fake implements Options {}
 
