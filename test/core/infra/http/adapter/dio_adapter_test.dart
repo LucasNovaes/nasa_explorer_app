@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nasa_explorer_app/src/core/core.dart';
@@ -23,7 +22,7 @@ void main() {
   });
 
   setUpAll(() {
-    url = faker.internet.httpUrl();
+    url = 'https://example.com';
     registerFallbackValue(OptionsFake());
   });
 
@@ -40,6 +39,13 @@ void main() {
   });
 
   group('post', () {
+    test('Should return a list of data when the request is 200', () async {
+      dio.mockPost(200);
+
+      final response = await dio.post(url);
+
+      expect(response.data, [1, 2, 3]);
+    });
     test('Should throw ServerError if post returns 500', () {
       dio.mockPost(500);
 
@@ -58,12 +64,14 @@ void main() {
   });
 
   group('get', () {
-    test('Should throw ServerError if get returns 500', () {
-      dio.mockGet(500);
+    test('Should return a list of data when the request is 200', () async {
+      dio.mockGet(200);
 
-      final response = sut.request(url: url, method: 'get');
+      final result = await dio.get(
+        url,
+      );
 
-      expect(response, throwsA(HttpError.serverError));
+      expect(result.data, [1, 2, 3]);
     });
 
     test('Should throw ServerError if get throws error', () {
@@ -76,7 +84,14 @@ void main() {
   });
 
   group('put', () {
-    test('Should throw BadRequestError if get returns 400', () {
+    test('Should return a Map of data when the request is 200', () async {
+      dio.mockGet(200);
+
+      final response = await dio.put(url);
+
+      expect(response.data, isA<Map<dynamic, dynamic>>());
+    });
+    test('Should throw BadRequest error if put returns 400', () {
       dio.mockPut(400);
 
       final response = sut.request(url: url, method: 'put');
@@ -84,7 +99,7 @@ void main() {
       expect(response, throwsA(HttpError.badRequest));
     });
 
-    test('Should throw BadRequestError if get returns 401', () {
+    test('Should throw Unauthorized error if put returns 401', () {
       dio.mockPut(401);
 
       final response = sut.request(url: url, method: 'put');
@@ -92,7 +107,7 @@ void main() {
       expect(response, throwsA(HttpError.unauthorized));
     });
 
-    test('Should throw BadRequestError if get returns 404', () {
+    test('Should throw NotFound error if put returns 404', () async {
       dio.mockPut(404);
 
       final response = sut.request(url: url, method: 'put');
@@ -100,25 +115,85 @@ void main() {
       expect(response, throwsA(HttpError.notFound));
     });
 
-    test('Should throw BadRequestError if get returns 405', () {
+    test('Should throw MethodNotAllowed error if put returns 405', () {
       dio.mockPut(405);
 
       final response = sut.request(url: url, method: 'put');
 
       expect(response, throwsA(HttpError.methodNotAllowed));
     });
+
+    test('Should throw Conflict error if put returns 409', () {
+      dio.mockPut(409);
+
+      final response = sut.request(url: url, method: 'put');
+
+      expect(response, throwsA(HttpError.conflict));
+    });
+
+    test('Should throw UnprocessableEntity error if get returns 422', () {
+      dio.mockPut(422, body: null);
+
+      final response = sut.request(url: url, method: 'put');
+
+      expect(response, throwsA(HttpError.unprocessableEntity));
+    });
+
+    test(
+        'Should throw UnprocessableEntity error if get returns 422 with a data',
+        () {
+      dio.mockPut(422);
+
+      final response = sut.request(url: url, method: 'put');
+
+      expect(response, throwsA({"any_key": "any_value"}));
+    });
+    test('Should throw UnprocessableEntity error if put returns 500', () {
+      dio.mockPut(500, body: null);
+
+      final response = sut.request(url: url, method: 'put');
+
+      expect(response, throwsA(HttpError.serverError));
+    });
+    test(
+        'Should throw UnprocessableEntity error if put returns 500 with a data',
+        () {
+      dio.mockPut(500);
+
+      final response = sut.request(url: url, method: 'put');
+
+      expect(response, throwsA({"any_key": "any_value"}));
+    });
+
+    test('Should return a list empty of data when the request is 204',
+        () async {
+      dio.mockPut(204);
+
+      final response = await sut.request(url: url, method: 'put');
+
+      expect(response, []);
+    });
+
+    test('Should return a list empty of data when the request is 201',
+        () async {
+      dio.mockPut(201, bodyList: []);
+
+      final response = await sut.request(url: url, method: 'put');
+
+      expect(response, []);
+    });
   });
 
   group('delete', () {
-    test('Should throw BadRequestError if delete returns 400', () {
-      dio.mockDelete(400);
+    test('Should return a List of data when the request is 200', () async {
+      dio.mockDelete(200);
 
-      final response = sut.request(url: url, method: 'delete');
+      final response = await dio.delete(url);
 
-      expect(response, throwsA(HttpError.badRequest));
+      expect(response.data, [1, 2, 3]);
     });
 
-    test('Should throw BadRequestError if delete returns 401', () {
+    test('Should throw Unauthorized error if delete returns 401', () {
       dio.mockDelete(401);
 
       final response = sut.request(url: url, method: 'delete');
@@ -126,7 +201,7 @@ void main() {
       expect(response, throwsA(HttpError.unauthorized));
     });
 
-    test('Should throw BadRequestError if delete returns 404', () {
+    test('Should throw NotFound error if delete returns 404', () {
       dio.mockDelete(404);
 
       final response = sut.request(url: url, method: 'delete');
@@ -134,12 +209,29 @@ void main() {
       expect(response, throwsA(HttpError.notFound));
     });
 
-    test('Should throw BadRequestError if delete returns 405', () {
+    test('Should throw MethodNotAllowed error if delete returns 405', () {
       dio.mockDelete(405);
 
       final response = sut.request(url: url, method: 'delete');
 
       expect(response, throwsA(HttpError.methodNotAllowed));
+    });
+  });
+  group('patch', () {
+    test('Should return a List of data when the request is 200', () async {
+      dio.mockPatch(200);
+
+      final response = await dio.patch(url);
+
+      expect(response.data, {'any_key': 'any_value'});
+    });
+
+    test('Should throw ServerError if get throws error', () {
+      dio.mockPatchError();
+
+      final response = sut.request(url: url, method: 'patch');
+
+      expect(response, throwsA(HttpError.serverError));
     });
   });
 }

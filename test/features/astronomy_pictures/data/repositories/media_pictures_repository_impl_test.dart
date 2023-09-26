@@ -1,98 +1,82 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/repositories/media_repository_impl.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/entities/media_entity.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/data/datasources/datasources.dart';
-import 'package:nasa_explorer_app/src/features/astronomy_pictures/utils/check_connectivity.dart';
+import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/domain.dart';
+import 'package:nasa_explorer_app/src/features/astronomy_pictures/utils/connectivity_utils.dart';
 
 import '../../../../mocks/entities/mock_media_entity.dart';
-import '../../../../mocks/http/mock_http_client.dart';
 
-class MockCacheMediaPicturesDatasource extends Mock
-    implements CacheMediaPicturesDatasource {
-  void mockCall(List<MediaEntity> response) async {
-    when(() => getMediaPicturesList()).thenAnswer((_) async => response);
-  }
-}
+class MockCacheMediaPicturesDatasources extends Mock
+    implements CacheMediaPicturesDatasource {}
 
-class MockInternetAddress extends Mock implements InternetAddress {}
+class MockExternalApiMediaPicturesDatasources extends Mock
+    implements ExternalApiMediaPicturesDatasource {}
 
-class MockExternalApiMediaPicturesDatasource extends Mock
-    implements ExternalApiMediaPicturesDatasource {
-  void mockCall(List<MediaEntity> response) async {
-    when(() => getMediaPicturesList()).thenAnswer((_) async => response);
-  }
-}
+class MockConnectivity extends Mock implements ConnectivityUtils {}
 
 void main() {
+  late MediaRepositoryImpl mediaRepositoryImpl;
+  late MockCacheMediaPicturesDatasources mockCacheMediaPicturesDatasources;
+  late MockExternalApiMediaPicturesDatasources
+      mockExternalApiMediaPicturesDatasources;
   late MediaEntity mockMediaEntity;
-  // late List<String> listEncode;
-  late CacheMediaPicturesDatasource mockCacheDataSource;
-  late ExternalApiMediaPicturesDatasource mockExternalApiDataSource;
-  late MediaRepositoryImpl repository;
-  setUp(() {
-    TestWidgetsFlutterBinding.ensureInitialized();
-    mockCacheDataSource = MockCacheMediaPicturesDatasource();
-    mockExternalApiDataSource = MockExternalApiMediaPicturesDatasource();
-    repository = MediaRepositoryImpl(
-      cacheMediaPicturesDatasources: mockCacheDataSource,
-      externalApiMediaPicturesDatasources: mockExternalApiDataSource,
-    );
+
+  setUp(() async {
+    mockCacheMediaPicturesDatasources = MockCacheMediaPicturesDatasources();
+    mockExternalApiMediaPicturesDatasources =
+        MockExternalApiMediaPicturesDatasources();
     mockMediaEntity = MockMediaEntity.makeEntity();
-    // listEncode =
-    //     [mockMediaEntity].map((media) => jsonEncode(media.toMap())).toList();
+    mediaRepositoryImpl = MediaRepositoryImpl(
+      cacheMediaPicturesDatasources: mockCacheMediaPicturesDatasources,
+      externalApiMediaPicturesDatasources:
+          mockExternalApiMediaPicturesDatasources,
+    );
   });
+
   test(
-      'getMediaPicturesList should return data from external API when connected',
+      'Should return media pictures list from external API when there is internet connection',
       () async {
-    final list = [mockMediaEntity];
-    when(() => mockExternalApiDataSource.getMediaPicturesList())
-        .thenAnswer((_) => Future.value(list));
+    when(() => mockExternalApiMediaPicturesDatasources.getMediaPicturesList())
+        .thenAnswer((_) async => [mockMediaEntity]);
 
-    await repository.getMediaPicturesList();
+    final result =
+        await mediaRepositoryImpl.getMediaPicturesList(isConnected: true);
+
+    expect(result, [mockMediaEntity]);
   });
 
-  // test('getMediaPicturesList should return data from cache when not connected',
-  //     () {
-  //   // Simular que não está conectado à internet
+  test(
+      'Should return media pictures list from cache when there is no internet connection',
+      () async {
+    when(() => mockCacheMediaPicturesDatasources.getMediaPicturesList())
+        .thenAnswer((_) async => [mockMediaEntity]);
 
-  //   // Simular a resposta do cache
+    final result =
+        await mediaRepositoryImpl.getMediaPicturesList(isConnected: false);
 
-  //   when(() => checkConnectivity()).thenAnswer((invocation) async => true);
-  //   // final list = [mockMediaEntity];
-  //   // when(() => mockCacheDataSource.getMediaPicturesList())
-  //   //     .thenAnswer((_) async => list);
+    expect(result, isA<List<MediaEntity>>());
+  });
 
-  //   // Executar a função a ser testada
-  //   // final result = await repository.getMediaPicturesList();
-  // });
+  test(
+      'Should return empty list when there is no internet connection and no data in cache',
+      () async {
+    when(() => mockCacheMediaPicturesDatasources.getMediaPicturesList())
+        .thenAnswer((_) async => []);
 
-  // test('saveMediaPicturesList should call cache data source', () async {
-  //   // Configurar os mocks
-  //   final cacheDataSource = MockCacheMediaPicturesDatasource();
-  //   final externalApiDataSource = MockExternalApiMediaPicturesDatasource();
-  //   final repository = MediaRepositoryImpl(
-  //     cacheMediaPicturesDatasources: cacheDataSource,
-  //     externalApiMediaPicturesDatasources: externalApiDataSource,
-  //   );
+    final result = await mediaRepositoryImpl.getMediaPicturesList();
 
-  //   // Dados de teste
-  //   final dataToSave = [
-  //     mockMediaEntity,
-  //     mockMediaEntity,
-  //   ];
+    expect(result, []);
+  });
 
-  //   // Executar a função a ser testada
-  //   await repository.saveMediaPicturesList(listData: dataToSave);
+  test('Should save media pictures list to cache', () async {
+    final listData = [mockMediaEntity];
+    when(() => mockCacheMediaPicturesDatasources.saveMediaPicturesList(
+        listData: listData)).thenAnswer((_) async {});
 
-  //   // Verificar que a função do cache foi chamada com os dados corretos
-  //   verify(() => cacheDataSource.saveMediaPicturesList(listData: dataToSave))
-  //       .called(1);
+    // Act
+    await mediaRepositoryImpl.saveMediaPicturesList(listData: listData);
 
-  //   // Verificar que a função da API externa não foi chamada
-  //   verifyNever(() => externalApiDataSource.getMediaPicturesList());
-  // });
+    verify(() => mockCacheMediaPicturesDatasources.saveMediaPicturesList(
+        listData: listData));
+  });
 }

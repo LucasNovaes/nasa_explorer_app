@@ -14,7 +14,6 @@ void main() {
   late List<String> listEncode;
 
   setUp(() async {
-    TestWidgetsFlutterBinding.ensureInitialized();
     mockMediaEntity = MockMediaEntity.makeEntity();
     key = 'test_key';
     listEncode =

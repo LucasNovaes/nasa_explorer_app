@@ -1,7 +1,7 @@
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/entities/media_entity.dart';
 import 'package:nasa_explorer_app/src/features/astronomy_pictures/domain/repositories/media_repository.dart';
 
-import '../../utils/check_connectivity.dart';
+import '../../utils/connectivity_utils.dart';
 import '../datasources/datasources.dart';
 
 class MediaRepositoryImpl implements MediaRepository {
@@ -14,8 +14,8 @@ class MediaRepositoryImpl implements MediaRepository {
   });
 
   @override
-  Future<List<MediaEntity>> getMediaPicturesList() async {
-    final isConnected = await checkConnectivity();
+  Future<List<MediaEntity>> getMediaPicturesList({bool? isConnected}) async {
+    isConnected ??= await ConnectivityUtils().checkConnectivity();
     return isConnected
         ? await externalApiMediaPicturesDatasources.getMediaPicturesList()
         : await cacheMediaPicturesDatasources.getMediaPicturesList();
