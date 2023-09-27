@@ -6,7 +6,7 @@ void main() {
     test('register and get', () {
       final di = DependencyInjection();
       final exampleObject =
-          ExampleObject(); // Substitua 'ExampleObject' pelo tipo que você deseja testar
+          ExampleObject();
 
       di.register<ExampleObject>(exampleObject);
       final result = di.get<ExampleObject>();
@@ -16,4 +16,4 @@ void main() {
   });
 }
 
-class ExampleObject {} // Substitua esta classe pelo tipo que você deseja testar
+class ExampleObject {}
